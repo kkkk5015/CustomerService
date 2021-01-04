@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+//import logo from './logo.svg';
 import './App.css';
 import { Component } from 'react';
 import Customer from './components/Customer';
@@ -21,48 +21,24 @@ const styles = theme => ({
   }
 })
 
-/*
-function App() {
-  return (
-    <div className="gray-background">
-      <img src={logo} lat="logo" />
-      <h2>Let's develop management system! </h2>
-    </div>
-  );
-}
-*/
-
-const customer = [
-  {
-    'id' : 1,
-    'image' : 'https://placeimg.com/64/64/1',
-    'name' : '기매원',
-    'birthday' : '940426',
-    'gender' : '남자',
-    'job' : '대학생'
-  },
-
-  {
-    'id' : 2,
-    'image' : 'https://placeimg.com/64/64/2',
-    'name' : '나도언',
-    'birthday' : '840426',
-    'gender' : '여자',
-    'job' : '화가'
-  },
-
-  {
-    'id' : 3,
-    'image' : 'https://placeimg.com/64/64/3',
-    'name' : '다아거',
-    'birthday' : '740426',
-    'gender' : '여자',
-    'job' : '프로그래머'
-  },
-
-]
-
 class App extends Component {
+  state = {
+    customers: ""
+  }
+  // compodidmount 모든 컴포먼트가 마운트가 되었을 때 사용되는 부분
+  componentDidMount() {
+      this.callApi()
+      .then(res => this.setState({customers:res}))
+      .catch(err => console.log(err));
+
+  }
+
+  callApi = async () => {
+    const response = await fetch('/api/customers');
+    const body = await response.json();
+    return body;
+  }
+  //기본적으로 변경되지 않는 정보는 props 로 변경되는 정보는 state를 사용
   render(){
     const {classes} = this.props ;
     return (
@@ -80,7 +56,7 @@ class App extends Component {
           </TableHead>
           <TableBody>
             {
-              customer.map(c => {
+              this.state.customers ? this.state.customers.map(c => {
                 return (
                   
                   <Customer 
@@ -94,7 +70,7 @@ class App extends Component {
                     job = {c.job}
                   />
                 )
-              })
+              }) : ""
             }
           </TableBody>
         </Table>

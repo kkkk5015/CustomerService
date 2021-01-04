@@ -19,7 +19,7 @@ class Customer extends React.Component {
         )
     }
 }
-
+/*
 // 사용자의 id값 image를 랜더링하는 부분
 class CustomerProfile extends React.Component {
     render() {
@@ -45,6 +45,6 @@ class CustomerProfile extends React.Component {
         
       );
     }
-  }
+  }*/
 
 export default Customer;
